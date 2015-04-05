@@ -74,16 +74,18 @@ void EqDialog::updateEq()
         return;
     }
 
-    eqValues.append(ui->slider01->value() / 100.0);
-    eqValues.append(ui->slider02->value() / 100.0);
-    eqValues.append(ui->slider03->value() / 100.0);
-    eqValues.append(ui->slider04->value() / 100.0);
-    eqValues.append(ui->slider05->value() / 100.0);
-    eqValues.append(ui->slider06->value() / 100.0);
-    eqValues.append(ui->slider07->value() / 100.0);
-    eqValues.append(ui->slider08->value() / 100.0);
-    eqValues.append(ui->slider09->value() / 100.0);
-    eqValues.append(ui->slider10->value() / 100.0);
+    const double powFactor = 1.5;
+
+    eqValues.append(pow((double)ui->slider01->value() / 100.0, powFactor));
+    eqValues.append(pow((double)ui->slider02->value() / 100.0, powFactor));
+    eqValues.append(pow((double)ui->slider03->value() / 100.0, powFactor));
+    eqValues.append(pow((double)ui->slider04->value() / 100.0, powFactor));
+    eqValues.append(pow((double)ui->slider05->value() / 100.0, powFactor));
+    eqValues.append(pow((double)ui->slider06->value() / 100.0, powFactor));
+    eqValues.append(pow((double)ui->slider07->value() / 100.0, powFactor));
+    eqValues.append(pow((double)ui->slider08->value() / 100.0, powFactor));
+    eqValues.append(pow((double)ui->slider09->value() / 100.0, powFactor));
+    eqValues.append(pow((double)ui->slider10->value() / 100.0, powFactor));
 
     for (unsigned int i = 0; i < framesNum; i++) {
         double frequency = (double)i * (double)sampRate / (double)framesNum;
