@@ -89,7 +89,7 @@ void EqDialog::updateEq()
                 // find band for current point
         if (frequency < bands.first()) {
             bandStartFreq = 0.0;
-            bandStartVal = 1.0;
+            bandStartVal = preAmp;
             bandEndFreq = bands.first();
             bandEndVal = eqValues.first();
         } else if (frequency > bands.last()) {
