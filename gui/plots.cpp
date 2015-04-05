@@ -12,7 +12,7 @@ IPCPlots::IPCPlots(QCustomPlot *RealPlot, QCustomPlot *FFTPlot, EqDialog *eq, un
     plotReal->yAxis->setTicks(false);
     plotReal->legend->setVisible(true);
 
-    plotFFT->xAxis->setRange(30.0, (double)SamplingRate / 2.0);
+    plotFFT->xAxis->setRange(eq->getBands().first(), eq->getBands().last());
     plotFFT->yAxis->setRange(-120.0, 10.0);
     plotFFT->xAxis->setAutoTicks(false);
     plotFFT->xAxis->setScaleType(QCPAxis::stLogarithmic);

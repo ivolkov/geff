@@ -34,6 +34,8 @@ EqDialog::EqDialog(unsigned int SamplingRate, unsigned int FramesNum, QWidget *p
     ui->plot->xAxis->setRange(QCPRange(bands.first(), bands.last()));
     ui->plot->yAxis->setRange(QCPRange(0.0, 2.0));
     ui->plot->xAxis->setScaleType(QCPAxis::stLogarithmic);
+    ui->plot->xAxis->setAutoTicks(false);
+    ui->plot->xAxis->setTickVector(bands);
 }
 
 EqDialog::~EqDialog()
