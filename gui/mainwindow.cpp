@@ -12,7 +12,7 @@ MainWindow::MainWindow(QWidget *parent) :
     qRegisterMetaType<QVector<double> >("QVector<double>");
     qRegisterMetaType<QVector<unsigned char> >("QVector<unsigned char>");
 
-    eq = new EqDialog(ipc.info->sampRate, ipc.info->framesNum);
+    eq = new EqDialog(&ipc);
     plots = new IPCPlots(ui->plotReal, ui->plotFFT, eq, ipc.info->sampRate, ipc.info->framesNum);
     comp = new Comp(&ipc);    
 
@@ -37,7 +37,6 @@ void MainWindow::on_actionShow_real_data_triggered()
 
 void MainWindow::on_actionEqualizer_triggered()
 {
-    eq->setIPC(&ipc);
     eq->exec();
 }
 

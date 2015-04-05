@@ -40,6 +40,9 @@
          <height>75</height>
         </size>
        </property>
+       <property name="minimum">
+        <number>1</number>
+       </property>
        <property name="maximum">
         <number>200</number>
        </property>
@@ -61,6 +64,9 @@
          <width>16777215</width>
          <height>75</height>
         </size>
+       </property>
+       <property name="minimum">
+        <number>1</number>
        </property>
        <property name="maximum">
         <number>200</number>
@@ -119,6 +125,9 @@
          <width>16777215</width>
          <height>75</height>
         </size>
+       </property>
+       <property name="minimum">
+        <number>1</number>
        </property>
        <property name="maximum">
         <number>200</number>
@@ -193,6 +202,9 @@
          <height>75</height>
         </size>
        </property>
+       <property name="minimum">
+        <number>1</number>
+       </property>
        <property name="maximum">
         <number>200</number>
        </property>
@@ -239,6 +251,9 @@
          <width>16777215</width>
          <height>75</height>
         </size>
+       </property>
+       <property name="minimum">
+        <number>1</number>
        </property>
        <property name="maximum">
         <number>200</number>
@@ -294,6 +309,9 @@
          <height>75</height>
         </size>
        </property>
+       <property name="minimum">
+        <number>1</number>
+       </property>
        <property name="maximum">
         <number>200</number>
        </property>
@@ -327,6 +345,9 @@
          <width>16777215</width>
          <height>75</height>
         </size>
+       </property>
+       <property name="minimum">
+        <number>1</number>
        </property>
        <property name="maximum">
         <number>200</number>
@@ -378,6 +399,9 @@
          <height>75</height>
         </size>
        </property>
+       <property name="minimum">
+        <number>1</number>
+       </property>
        <property name="maximum">
         <number>200</number>
        </property>
@@ -419,6 +443,9 @@
          <height>75</height>
         </size>
        </property>
+       <property name="minimum">
+        <number>1</number>
+       </property>
        <property name="maximum">
         <number>200</number>
        </property>
@@ -453,6 +480,9 @@
          <height>75</height>
         </size>
        </property>
+       <property name="minimum">
+        <number>1</number>
+       </property>
        <property name="maximum">
         <number>200</number>
        </property>
@@ -486,6 +516,9 @@
          <width>16777215</width>
          <height>75</height>
         </size>
+       </property>
+       <property name="minimum">
+        <number>1</number>
        </property>
        <property name="maximum">
         <number>200</number>

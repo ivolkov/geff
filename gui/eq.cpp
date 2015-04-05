@@ -8,14 +8,13 @@ double EqDialog::interpolation(double bandStartFreq, double bandStartVal, double
     return (bandStartVal * (1.0 - mu2) + bandEndVal * mu2);
 }
 
-EqDialog::EqDialog(unsigned int SamplingRate, unsigned int FramesNum, QWidget *parent) :
+EqDialog::EqDialog(IPC *pIPC, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::EqDialog)
 {
     ui->setupUi(this);
 
-    sampRate = SamplingRate;
-    framesNum = FramesNum;
+    ipc = pIPC;
 
     bands.append(30.0);
     bands.append(60.0);
@@ -26,39 +25,33 @@ EqDialog::EqDialog(unsigned int SamplingRate, unsigned int FramesNum, QWidget *p
     bands.append(1600.0);
     bands.append(3200.0);
     bands.append(6400.0);
-    bands.append(12800.0);
-
-    ipc = NULL;
+    bands.append(12800.0);    
 
     ui->plot->addGraph();
+    ui->plot->graph(0)->setPen(QPen(QBrush(Qt::SolidPattern), 2.0));
     ui->plot->xAxis->setRange(QCPRange(bands.first(), bands.last()));
-    ui->plot->yAxis->setRange(QCPRange(0.0, 2.0));
     ui->plot->xAxis->setScaleType(QCPAxis::stLogarithmic);
     ui->plot->xAxis->setAutoTicks(false);
     ui->plot->xAxis->setTickVector(bands);
+
+    connect(ui->sliderPreAmp, SIGNAL(valueChanged(int)), this, SLOT(updateEq()));
+    connect(ui->slider01, SIGNAL(valueChanged(int)), this, SLOT(updateEq()));
+    connect(ui->slider02, SIGNAL(valueChanged(int)), this, SLOT(updateEq()));
+    connect(ui->slider03, SIGNAL(valueChanged(int)), this, SLOT(updateEq()));
+    connect(ui->slider04, SIGNAL(valueChanged(int)), this, SLOT(updateEq()));
+    connect(ui->slider05, SIGNAL(valueChanged(int)), this, SLOT(updateEq()));
+    connect(ui->slider06, SIGNAL(valueChanged(int)), this, SLOT(updateEq()));
+    connect(ui->slider07, SIGNAL(valueChanged(int)), this, SLOT(updateEq()));
+    connect(ui->slider08, SIGNAL(valueChanged(int)), this, SLOT(updateEq()));
+    connect(ui->slider09, SIGNAL(valueChanged(int)), this, SLOT(updateEq()));
+    connect(ui->slider10, SIGNAL(valueChanged(int)), this, SLOT(updateEq()));
+
+    updateEq();
 }
 
 EqDialog::~EqDialog()
 {
     delete ui;
-}
-
-void EqDialog::setIPC(IPC *pIPC)
-{
-    ipc = pIPC;
-
-    connect(ui->slider01, SIGNAL(sliderReleased()), this, SLOT(updateEq()));
-    connect(ui->slider02, SIGNAL(sliderReleased()), this, SLOT(updateEq()));
-    connect(ui->slider03, SIGNAL(sliderReleased()), this, SLOT(updateEq()));
-    connect(ui->slider04, SIGNAL(sliderReleased()), this, SLOT(updateEq()));
-    connect(ui->slider05, SIGNAL(sliderReleased()), this, SLOT(updateEq()));
-    connect(ui->slider06, SIGNAL(sliderReleased()), this, SLOT(updateEq()));
-    connect(ui->slider07, SIGNAL(sliderReleased()), this, SLOT(updateEq()));
-    connect(ui->slider08, SIGNAL(sliderReleased()), this, SLOT(updateEq()));
-    connect(ui->slider09, SIGNAL(sliderReleased()), this, SLOT(updateEq()));
-    connect(ui->slider10, SIGNAL(sliderReleased()), this, SLOT(updateEq()));
-
-    updateEq();
 }
 
 QVector<double> EqDialog::getBands()
@@ -71,26 +64,22 @@ void EqDialog::updateEq()
     QVector<double> eqValues;
     QVector<double> dataX, dataY;
 
-    if (ipc == NULL) {
-        qDebug() << "EqDialog::updateEq() : ipc not set";
-        return;
-    }
-
+    const double preAmp = (double)ui->sliderPreAmp->value() / 100.0;
     const double powFactor = 1.5;
 
-    eqValues.append(pow((double)ui->slider01->value() / 100.0, powFactor));
-    eqValues.append(pow((double)ui->slider02->value() / 100.0, powFactor));
-    eqValues.append(pow((double)ui->slider03->value() / 100.0, powFactor));
-    eqValues.append(pow((double)ui->slider04->value() / 100.0, powFactor));
-    eqValues.append(pow((double)ui->slider05->value() / 100.0, powFactor));
-    eqValues.append(pow((double)ui->slider06->value() / 100.0, powFactor));
-    eqValues.append(pow((double)ui->slider07->value() / 100.0, powFactor));
-    eqValues.append(pow((double)ui->slider08->value() / 100.0, powFactor));
-    eqValues.append(pow((double)ui->slider09->value() / 100.0, powFactor));
-    eqValues.append(pow((double)ui->slider10->value() / 100.0, powFactor));
+    eqValues.append(pow((double)ui->slider01->value() * preAmp / 100.0, powFactor));
+    eqValues.append(pow((double)ui->slider02->value() * preAmp / 100.0, powFactor));
+    eqValues.append(pow((double)ui->slider03->value() * preAmp / 100.0, powFactor));
+    eqValues.append(pow((double)ui->slider04->value() * preAmp / 100.0, powFactor));
+    eqValues.append(pow((double)ui->slider05->value() * preAmp / 100.0, powFactor));
+    eqValues.append(pow((double)ui->slider06->value() * preAmp / 100.0, powFactor));
+    eqValues.append(pow((double)ui->slider07->value() * preAmp / 100.0, powFactor));
+    eqValues.append(pow((double)ui->slider08->value() * preAmp / 100.0, powFactor));
+    eqValues.append(pow((double)ui->slider09->value() * preAmp / 100.0, powFactor));
+    eqValues.append(pow((double)ui->slider10->value() * preAmp / 100.0, powFactor));
 
-    for (unsigned int i = 0; i < framesNum; i++) {
-        double frequency = (double)i * (double)sampRate / (double)framesNum;
+    for (unsigned int i = 0; i < ipc->info->framesNum; i++) {
+        double frequency = (double)i * (double)ipc->info->sampRate / (double)ipc->info->framesNum;
         double bandStartFreq = -1.0;
         double bandStartVal = -1.0;
         double bandEndFreq = -1.0;
@@ -106,7 +95,7 @@ void EqDialog::updateEq()
         } else if (frequency > bands.last()) {
             bandStartFreq = bands.last();
             bandStartVal = eqValues.last();
-            bandEndFreq = framesNum - 1;
+            bandEndFreq = ipc->info->framesNum - 1;
             bandEndVal = 1.0;
         } else {
             for (int j = 1; j < bands.size(); j++)
@@ -131,5 +120,7 @@ void EqDialog::updateEq()
     }
 
     ui->plot->graph(0)->setData(dataX, dataY);
+    ui->plot->yAxis->rescale();
+    ui->plot->yAxis->setRangeLower(0.0);
     ui->plot->replot();
 }
