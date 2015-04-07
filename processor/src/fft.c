@@ -58,22 +58,6 @@ void fft_perform()
 
     for (i = 0; i < audio_period_size_frames; i++)
     	fft_real_out[i] /= (double)audio_period_size_frames;
-
-    /* compression */
-    if (ipc_comp->enable) {
-		double max_val = fft_real_out[0];
-		for (i = 1; i < audio_period_size_frames; i++)
-			if (fabs(fft_real_out[i]) > max_val)
-				max_val = fabs(fft_real_out[i]);
-
-		for (i = 0; i < audio_period_size_frames; i++) {
-			double diff = fabs(fft_real_out[i]) / ipc_comp->threshold;
-			if (diff > 1.0)
-					fft_real_out[i] /= 1.0 + (log10(diff) * 2.0);
-
-			fft_real_out[i] *= ipc_comp->gain;
-		}
-    }
 }
 
 void fft_free()

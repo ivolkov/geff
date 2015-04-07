@@ -25,7 +25,7 @@ void compress_routine(double *data)
 		data[i] /= ratio;
 }
 
-void compess(double *data)
+void compress(double *data)
 {
 	unsigned int i;
 	bool threshold_reach = false;
