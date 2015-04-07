@@ -22,7 +22,10 @@ void compress_routine(double *data)
 	unsigned int i;
 
 	for (i = 0; i < audio_period_size_frames; i++)
-		data[i] /= ratio;
+		if (data[i] > 0)
+			data[i] = ((data[i] - threshold) / ratio) + threshold;
+		else
+			data[i] = -(((fabs(data[i]) - threshold) / ratio) + threshold);
 }
 
 void compression(double *data)
