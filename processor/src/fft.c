@@ -30,7 +30,6 @@ void fft_perform()
 {
     fftw_execute(fft_plan_forward);
 
-    /* do something here */
     int i;
 
     for (i = 0; i < audio_period_size_frames; i++) {
