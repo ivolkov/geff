@@ -5,7 +5,7 @@
 #define ATTACK_LIMIT 5
 #define RELEASE_LIMIT 50
 
-const unsigned int threshold = 5000.0;
+const double threshold = 5000.0;
 const double ratio = 4.0;
 const double attack_ms = 20.0;
 const double release_ms = 100.0;
@@ -17,28 +17,34 @@ bool release_stage = false;
 unsigned int attack_counter = 0;
 unsigned int release_counter = 0;
 
-void compress_routine(double *data)
+void compress_routine(double *data, double divider)
 {
 	unsigned int i;
 
 	for (i = 0; i < audio_period_size_frames; i++)
-		if (data[i] > 0)
-			data[i] = ((data[i] - threshold) / ratio) + threshold;
-		else
-			data[i] = -(((fabs(data[i]) - threshold) / ratio) + threshold);
+		data[i] /= divider;
 }
 
 void compression(double *data)
 {
 	unsigned int i;
+	double peek = 0.0;
 	bool threshold_reach = false;
+	double divider = 1.0;
 
-	/* determine if threshold level has been reached */
-	for (i = 0; i < audio_period_size_frames; i++)
-		if (fabs(data[i]) > threshold) {
-			threshold_reach = true;
-			break;
-		}
+	/* determine peek level */
+	double abs_value;
+	for (i = 0; i < audio_period_size_frames; i++) {
+		abs_value = fabs(data[i]);
+		if (abs_value > peek)
+			peek = abs_value;
+	}
+
+	/* determine if threshold value has been reached */
+	if (peek > threshold) {
+		threshold_reach = true;
+		divider = peek / threshold;
+	}
 
 	/* attack stage */
 	if (attack_stage) {
@@ -53,7 +59,7 @@ void compression(double *data)
 		}
 	/* compression stage */
 	} else if (compress_stage) {
-		compress_routine(data);
+		compress_routine(data, divider);
 
 		if (!threshold_reach) {
 			compress_stage = false;
@@ -62,7 +68,7 @@ void compression(double *data)
 		}
 	/* release stage */
 	} else if (release_stage) {
-		compress_routine(data);
+		compress_routine(data, divider);
 		if (threshold_reach) {
 			release_stage = false;
 			compress_stage = true;
