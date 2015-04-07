@@ -37,6 +37,9 @@ void fft_perform()
     	fft_comp_work[i][0] = fft_comp_orig[i][0];
     	fft_comp_work[i][1] = fft_comp_orig[i][1];
 
+    	/* apply compression */
+    	fft_compress(fft_real_in, fft_comp_work);
+
     	/* apply equalizer */
     	if (i < FFT_LEN) {
     		fft_comp_work[i][0] *= ipc_eq[i];

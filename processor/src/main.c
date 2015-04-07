@@ -3,7 +3,6 @@
 #include <math.h>
 #include "audio.h"
 #include "fft.h"
-#include "comp.h"
 #include "ipc.h"
 
 int main(int argc, const char *argv[]) {
@@ -61,9 +60,6 @@ int main(int argc, const char *argv[]) {
 
     	/* perform fft */
     	fft_perform();
-
-    	/* compression */
-    	compress(fft_real_out);
 
     	/* fft output -> raw audio output */
 		ptr = audio_raw;

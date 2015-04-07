@@ -1,4 +1,4 @@
-#include "comp.h"
+#include "fft_comp.h"
 #include "audio.h"
 #include <math.h>
 
@@ -17,22 +17,24 @@ bool release_stage = false;
 unsigned int attack_counter = 0;
 unsigned int release_counter = 0;
 
-void compress_routine(double *data)
+void compress_routine(fftw_complex *complex_data)
 {
 	unsigned int i;
 
-	for (i = 0; i < audio_period_size_frames; i++)
-		data[i] /= ratio;
+	for (i = 0; i < audio_period_size_frames; i++) {
+		complex_data[i][0] /= ratio;
+		complex_data[i][1] /= ratio;
+	}
 }
 
-void compress(double *data)
+void fft_compress(double *real_data, fftw_complex *complex_data)
 {
 	unsigned int i;
 	bool threshold_reach = false;
 
 	/* determine if threshold level has been reached */
 	for (i = 0; i < audio_period_size_frames; i++)
-		if (fabs(data[i]) > threshold) {
+		if (fabs(real_data[i]) > threshold) {
 			threshold_reach = true;
 			break;
 		}
@@ -50,7 +52,7 @@ void compress(double *data)
 		}
 	/* compression stage */
 	} else if (compress_stage) {
-		compress_routine(data);
+		compress_routine(complex_data);
 
 		if (!threshold_reach) {
 			compress_stage = false;
@@ -59,7 +61,7 @@ void compress(double *data)
 		}
 	/* release stage */
 	} else if (release_stage) {
-		compress_routine(data);
+		compress_routine(complex_data);
 		if (threshold_reach) {
 			release_stage = false;
 			compress_stage = true;
