@@ -7,8 +7,8 @@
 #define FFT_LEN (audio_period_size_frames / 2)
 
 extern double *fft_real_in;
-extern fftw_complex *fft_comp_orig;
-extern fftw_complex *fft_comp_mod;
+extern fftw_complex *fft_comp_in;
+extern fftw_complex *fft_comp_out;
 extern double *fft_real_out;
 
 void fft_init();

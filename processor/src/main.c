@@ -78,8 +78,8 @@ int main(int argc, const char *argv[]) {
     	/* fill IPC buffers */
     	ipc_write_plot_real(0, plot_real_x, audio_in_real, audio_period_size_frames);
     	ipc_write_plot_real(1, plot_real_x, fft_real_out, audio_period_size_frames);
-    	ipc_write_plot_fft(2, plot_fft_x, fft_comp_orig, FFT_LEN);
-    	ipc_write_plot_fft(3, plot_fft_x, fft_comp_mod, FFT_LEN);
+    	ipc_write_plot_fft(2, plot_fft_x, fft_comp_in, FFT_LEN);
+    	ipc_write_plot_fft(3, plot_fft_x, fft_comp_out, FFT_LEN);
     }
 
     audio_free();
