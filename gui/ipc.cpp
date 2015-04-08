@@ -130,23 +130,6 @@ bool IPC::shmRead(struct ShmPlot *plot, double *dataX, double *dataY, unsigned i
 
 void IPC::magnToDb(double *dataY, unsigned int len)
 {
-    /* transform FFT_IN plot data from magnitude to dB */
-//        double magnitude;
-
-//        /* search for normalization factor */
-//        double normalizationFactor = dataY->first();
-//        for (int i = 1; i < dataY->length(); i++) {
-//            magnitude = dataY->at(i);
-//            if (magnitude > normalizationFactor)
-//                normalizationFactor = magnitude;
-//        }
-
-//        /* normalization to 0..1 scale */
-//        if (normalizationFactor != 0.0) {
-//            for (int i = 0; i < dataY->length(); i++)
-//                dataY->replace(i, (dataY->at(i) / normalizationFactor));
-//        }
-
         /* tranform to dB */
     for (unsigned int i = 0; i < len; i++)
         dataY[i] = 20.0 * log10(dataY[i]);
