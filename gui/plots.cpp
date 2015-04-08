@@ -75,7 +75,6 @@ IPCPlots::~IPCPlots()
 
 void IPCPlots::plotMouseMove(QMouseEvent *event)
 {    
-    //double val = plotFFT->xAxis->pixelToCoord(event->localPos().x());
     double val = plotFFT->xAxis->pixelToCoord(event->pos().x());
     lblFFT->setText(QString::number(val, 'f', 2));
 }
