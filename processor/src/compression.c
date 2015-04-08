@@ -43,7 +43,7 @@ void compression(double *data)
 	/* determine if threshold value has been reached */
 	if (peek > threshold) {
 		threshold_reach = true;
-		divider = peek / threshold;
+		divider = peek / (threshold + ((peek - threshold) / ratio));
 	}
 
 	/* attack stage */
