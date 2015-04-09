@@ -30,7 +30,9 @@ struct ShmPlot {
 struct ShmComp {
     bool enable;
     double threshold;
-    double gain;
+    double ratio;
+    double attack_ms;
+    double release_ms;
 };
 
 struct ShmInfo {

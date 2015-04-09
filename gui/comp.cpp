@@ -12,7 +12,9 @@ Comp::Comp(IPC *pIPC, QWidget *parent) :
 
     ui->cbEnable->setChecked(ipc->norm->enable);
     ui->slThreshold->setValue(int(ipc->norm->threshold));
-    ui->slGain->setValue(int(ipc->norm->gain * 100.0));
+    ui->slRatio->setValue(int(ipc->norm->ratio));
+    ui->slAttack->setValue(int(ipc->norm->attack_ms));
+    ui->slRelease->setValue(int(ipc->norm->release_ms));
 
 }
 
@@ -31,7 +33,17 @@ void Comp::on_slThreshold_sliderMoved(int position)
     ipc->norm->threshold = (double)position;
 }
 
-void Comp::on_slGain_sliderMoved(int position)
+void Comp::on_slRatio_sliderMoved(int position)
 {
-    ipc->norm->gain = (double)position / 100.0;
+    ipc->norm->ratio = (double)position;
+}
+
+void Comp::on_slAttack_sliderMoved(int position)
+{
+    ipc->norm->attack_ms = (double)position;
+}
+
+void Comp::on_slRelease_sliderMoved(int position)
+{
+    ipc->norm->release_ms = (double)position;
 }

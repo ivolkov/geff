@@ -56,7 +56,9 @@ bool ipc_init()
     /* compression data initialization */
     ipc_comp->enable = false;
     ipc_comp->threshold = 3200.0;
-    ipc_comp->gain = 1.2;
+    ipc_comp->ratio = 4.0;
+    ipc_comp->attack_ms = 20.0;
+    ipc_comp->release_ms = 100.0;
 
     /* ipc info initialization */
     ipc_info->period_size_frames = audio_period_size_frames;

@@ -18,7 +18,9 @@ struct ipc_plot_data {
 struct ipc_comp_data {
 	bool enable;
 	double threshold;
-	double gain;
+	double ratio;
+	double attack_ms;
+	double release_ms;
 };
 
 struct ipc_audio_info {

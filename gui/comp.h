@@ -27,7 +27,9 @@ public slots:
 private slots:
     void on_cbEnable_clicked();
     void on_slThreshold_sliderMoved(int position);
-    void on_slGain_sliderMoved(int position);
+    void on_slRatio_sliderMoved(int position);
+    void on_slAttack_sliderMoved(int position);
+    void on_slRelease_sliderMoved(int position);
 };
 
 #endif // NORM_H
