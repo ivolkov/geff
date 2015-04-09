@@ -25,6 +25,9 @@ void compression(double *data)
 	bool threshold_reach = false;
 	double divider = 1.0;
 
+	if (!ipc_comp->enable)
+		return;
+
 	/* determine peek level */
 	double abs_value;
 	for (i = 0; i < audio_period_size_frames; i++) {
