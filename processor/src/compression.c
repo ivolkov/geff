@@ -1,11 +1,7 @@
 #include "compression.h"
 #include "audio.h"
+#include "ipc.h"
 #include <math.h>
-
-const double threshold = 5000.0;
-const double ratio = 4.0;
-const double attack_ms = 20.0;
-const double release_ms = 100.0;
 
 bool attack_stage = false;
 bool compress_stage = false;
@@ -38,16 +34,16 @@ void compression(double *data)
 	}
 
 	/* determine if threshold value has been reached */
-	if (peek > threshold) {
+	if (peek > ipc_comp->threshold) {
 		threshold_reach = true;
-		divider = peek / (threshold + ((peek - threshold) / ratio));
+		divider = peek / (ipc_comp->threshold + ((peek - ipc_comp->threshold) / ipc_comp->ratio));
 	}
 
 	/* attack stage */
 	if (attack_stage) {
 		if (threshold_reach) {
 			attack_counter++;
-			if ((attack_counter * AUDIO_PERIOD_SEC) > (attack_ms / 1000.0)) {
+			if ((attack_counter * AUDIO_PERIOD_SEC) > (ipc_comp->attack_ms / 1000.0)) {
 				attack_stage = false;
 				compress_stage = true;
 			}
@@ -71,7 +67,7 @@ void compression(double *data)
 			compress_stage = true;
 		} else {
 			release_counter++;
-			if ((release_counter * AUDIO_PERIOD_SEC) > (release_ms / 1000.0)) {
+			if ((release_counter * AUDIO_PERIOD_SEC) > (ipc_comp->release_ms / 1000.0)) {
 				release_stage = false;
 			}
 		}
