@@ -2,7 +2,6 @@
 #include "audio.h"
 #include <math.h>
 
-#define ATTACK_LIMIT 5
 #define RELEASE_LIMIT 50
 
 const double threshold = 5000.0;
@@ -50,7 +49,7 @@ void compression(double *data)
 	if (attack_stage) {
 		if (threshold_reach) {
 			attack_counter++;
-			if (attack_counter > ATTACK_LIMIT) {
+			if ((attack_counter * AUDIO_PERIOD_SEC) > (attack_ms / 1000.0)) {
 				attack_stage = false;
 				compress_stage = true;
 			}
