@@ -11,7 +11,7 @@
 
 const char *plotsKeyFileName = "/tmp/gproc_plots";
 const char *eqKeyFileName = "/tmp/gproc_eq";
-const char *normKeyFileName = "/tmp/gproc_comp";
+const char *compKeyFileName = "/tmp/gproc_comp";
 const char *infoKeyFileName = "/tmp/gproc_info";
 
 IPC::IPC(QObject *parent) : QObject(parent)
@@ -29,7 +29,7 @@ IPC::IPC(QObject *parent) : QObject(parent)
         return;
     }
 
-    if (!shmAttach(normKeyFileName, sizeof(struct ShmComp), (char**)&norm)) {
+    if (!shmAttach(compKeyFileName, sizeof(struct ShmComp), (char**)&comp)) {
         qDebug() << "IPC: unable to attach normalization key file";
         return;
     }

@@ -57,7 +57,7 @@ public:
     explicit IPC(QObject *parent = 0);
     ~IPC();    
     double *eq;
-    ShmComp *norm;
+    ShmComp *comp;
     struct ShmInfo *info;
 
 signals:

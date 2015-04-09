@@ -8,7 +8,7 @@
 /* keyfile names for shmem */
 const char *keyfile_plots = "/tmp/gproc_plots";
 const char *keyfile_eq = "/tmp/gproc_eq";
-const char *keyfile_norm = "/tmp/gproc_comp";
+const char *keyfile_comp = "/tmp/gproc_comp";
 const char *keyfile_info = "/tmp/gproc_info";
 
 /* pointers to data segments in shared memory */
@@ -28,7 +28,7 @@ bool ipc_init()
     if (!ipc_attach(keyfile_eq, sizeof(double) * PLOT_MAX_LEN / 2, (char **)&ipc_eq))
         return false;
 
-    if (!ipc_attach(keyfile_norm, sizeof(struct ipc_comp_data), (char **)&ipc_comp))
+    if (!ipc_attach(keyfile_comp, sizeof(struct ipc_comp_data), (char **)&ipc_comp))
     	return false;
 
     if (!ipc_attach(keyfile_info, sizeof(struct ipc_audio_info), (char **)&ipc_info))

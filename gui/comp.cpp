@@ -10,11 +10,11 @@ Comp::Comp(IPC *pIPC, QWidget *parent) :
 
     ipc = pIPC;
 
-    ui->cbEnable->setChecked(ipc->norm->enable);
-    ui->slThreshold->setValue(int(ipc->norm->threshold));
-    ui->slRatio->setValue(int(ipc->norm->ratio));
-    ui->slAttack->setValue(int(ipc->norm->attack_ms));
-    ui->slRelease->setValue(int(ipc->norm->release_ms));
+    ui->cbEnable->setChecked(ipc->comp->enable);
+    ui->slThreshold->setValue(int(ipc->comp->threshold));
+    ui->slRatio->setValue(int(ipc->comp->ratio));
+    ui->slAttack->setValue(int(ipc->comp->attack_ms));
+    ui->slRelease->setValue(int(ipc->comp->release_ms));
 
 }
 
@@ -25,25 +25,25 @@ Comp::~Comp()
 
 void Comp::on_cbEnable_clicked()
 {
-    ipc->norm->enable = ui->cbEnable->isChecked();
+    ipc->comp->enable = ui->cbEnable->isChecked();
 }
 
 void Comp::on_slThreshold_sliderMoved(int position)
 {
-    ipc->norm->threshold = (double)position;
+    ipc->comp->threshold = (double)position;
 }
 
 void Comp::on_slRatio_sliderMoved(int position)
 {
-    ipc->norm->ratio = (double)position;
+    ipc->comp->ratio = (double)position;
 }
 
 void Comp::on_slAttack_sliderMoved(int position)
 {
-    ipc->norm->attack_ms = (double)position;
+    ipc->comp->attack_ms = (double)position;
 }
 
 void Comp::on_slRelease_sliderMoved(int position)
 {
-    ipc->norm->release_ms = (double)position;
+    ipc->comp->release_ms = (double)position;
 }
