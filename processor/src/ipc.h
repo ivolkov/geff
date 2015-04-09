@@ -6,14 +6,9 @@
 #include <stdbool.h>
 #include <stdint.h>
 
-struct ipc_audio_info {
-	unsigned int sampling_rate;
-	unsigned int period_size_frames;
-};
-
 extern double *ipc_eq;
-extern struct plot_data *ipc_plots[PLOT_CNT];
-extern struct comp_data *ipc_comp;
+extern struct ipc_plot_data *ipc_plots[PLOT_CNT];
+extern struct ipc_comp_data *ipc_comp;
 
 bool ipc_init();
 void ipc_write_plot_real(int num, double *data_x, double *data_y, unsigned int len);

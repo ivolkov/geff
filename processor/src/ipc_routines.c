@@ -42,7 +42,7 @@ bool ipc_attach(const char *fname, size_t size, char **shm_ptr)
 	return true;
 }
 
-void ipc_write(struct plot_data *plot, double *data_x, double *data_y, unsigned int len)
+void ipc_write(struct ipc_plot_data *plot, double *data_x, double *data_y, unsigned int len)
 {
 	if (!plot->upd) {
 		plot->len = len;
@@ -52,7 +52,7 @@ void ipc_write(struct plot_data *plot, double *data_x, double *data_y, unsigned 
 	}
 }
 
-bool ipc_read(struct plot_data *plot, double *data_x, double *data_y, unsigned int *len)
+bool ipc_read(struct ipc_plot_data *plot, double *data_x, double *data_y, unsigned int *len)
 {
     if (plot->upd) {
         memcpy(data_x, plot->x, sizeof(double) * plot->len);

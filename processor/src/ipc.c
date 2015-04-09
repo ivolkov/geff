@@ -14,21 +14,21 @@ const char *keyfile_info = "/tmp/gproc_info";
 /* pointers to data segments in shared memory */
 double *ipc_eq;
 char *ipc_plots_buffer;
-struct plot_data *ipc_plots[PLOT_CNT];
-struct comp_data *ipc_comp;
+struct ipc_plot_data *ipc_plots[PLOT_CNT];
+struct ipc_comp_data *ipc_comp;
 struct ipc_audio_info *ipc_info;
 
 bool ipc_init()
 {
 	int i, j;
 
-    if (!ipc_attach(keyfile_plots, sizeof(struct plot_data) * PLOT_CNT, &ipc_plots_buffer))
+    if (!ipc_attach(keyfile_plots, sizeof(struct ipc_plot_data) * PLOT_CNT, &ipc_plots_buffer))
         return false;
 
     if (!ipc_attach(keyfile_eq, sizeof(double) * PLOT_MAX_LEN / 2, (char **)&ipc_eq))
         return false;
 
-    if (!ipc_attach(keyfile_norm, sizeof(struct comp_data), (char **)&ipc_comp))
+    if (!ipc_attach(keyfile_norm, sizeof(struct ipc_comp_data), (char **)&ipc_comp))
     	return false;
 
     if (!ipc_attach(keyfile_info, sizeof(struct ipc_audio_info), (char **)&ipc_info))
@@ -36,7 +36,7 @@ bool ipc_init()
 
     /* set plots pointers */
     for (i = 0; i < PLOT_CNT; i++)
-    	ipc_plots[i] = (struct plot_data*)(ipc_plots_buffer + (sizeof(struct plot_data) * i));
+    	ipc_plots[i] = (struct ipc_plot_data*)(ipc_plots_buffer + (sizeof(struct ipc_plot_data) * i));
 
     /* plots data initialization */
     for (i = 0; i < PLOT_CNT; i++) {
