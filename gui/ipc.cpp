@@ -11,7 +11,7 @@
 
 const char *plotsKeyFileName = "/tmp/gproc_plots";
 const char *eqKeyFileName = "/tmp/gproc_eq";
-const char *normKeyFileName = "/tmp/gproc_proc";
+const char *normKeyFileName = "/tmp/gproc_comp";
 const char *infoKeyFileName = "/tmp/gproc_info";
 
 IPC::IPC(QObject *parent) : QObject(parent)

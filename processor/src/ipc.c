@@ -8,7 +8,7 @@
 /* keyfile names for shmem */
 const char *keyfile_plots = "/tmp/gproc_plots";
 const char *keyfile_eq = "/tmp/gproc_eq";
-const char *keyfile_norm = "/tmp/gproc_proc";
+const char *keyfile_norm = "/tmp/gproc_comp";
 const char *keyfile_info = "/tmp/gproc_info";
 
 /* pointers to data segments in shared memory */
