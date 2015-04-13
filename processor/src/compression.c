@@ -7,7 +7,8 @@ bool attack_stage = false;
 bool compress_stage = false;
 bool release_stage = false;
 
-unsigned int attack_counter = 0;
+unsigned int attack_counter;
+unsigned int attack_counter_aim;
 unsigned int release_counter = 0;
 
 void compress_routine(double *data, double divider)
@@ -46,11 +47,11 @@ void compression(double *data)
 	if (attack_stage) {
 		if (threshold_reach) {
 			attack_counter++;
-			if ((attack_counter * AUDIO_PERIOD_SEC) > (ipc_comp->attack_ms / 1000.0)) {
+			if (attack_counter < attack_counter_aim) {
 				attack_stage = false;
 				compress_stage = true;
 			}
-		} else {
+		} else  {
 			attack_stage = false;
 		}
 	/* compression stage */
@@ -79,6 +80,7 @@ void compression(double *data)
 		if (threshold_reach) {
 			attack_stage = true;
 			attack_counter = 0;
+			attack_counter_aim = ipc_comp->attack_ms / (AUDIO_PERIOD_SEC * 1000);
 		}
 	}
 }
