@@ -26,7 +26,7 @@ extern unsigned int audio_p_rate;
 #define AUDIO_CHANNELS          	2
 
 /* period between samples in seconds */
-#define AUDIO_PERIOD_SEC ((1.0 / (double)audio_samp_rate))
+#define AUDIO_PERIOD_SEC ((1.0 / (double)audio_samp_rate) * audio_period_size_frames)
 
 /* frame size in bytes */
 #define AUDIO_FRAME_SIZE_BYTES		(snd_pcm_format_width(AUDIO_FORMAT) / 8)
