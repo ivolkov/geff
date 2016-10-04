@@ -13,7 +13,7 @@ int main(int argc, const char *argv[]) {
 	double *plot_fft_x;
 
     if (!audio_init())
-    	return EXIT_FAILURE;
+    	return (EXIT_FAILURE);
 
     audio_raw = malloc(AUDIO_SOFT_BUF_SIZE_BYTES);
     audio_in_real = malloc(sizeof(double) * audio_period_size_frames);
@@ -31,7 +31,7 @@ int main(int argc, const char *argv[]) {
 	fft_init();
 
     if (!ipc_init(plot_real_x))
-    	return EXIT_FAILURE;
+    	return (EXIT_FAILURE);
 
     /* re-initialization needed to start audio streams */
     audio_reinit(audio_raw);
@@ -90,5 +90,5 @@ int main(int argc, const char *argv[]) {
     free(plot_real_x);
     free(plot_fft_x);
 
-    return EXIT_SUCCESS;
+    return (EXIT_SUCCESS);
 }

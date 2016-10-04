@@ -4,7 +4,7 @@
 /* set desired audio parameters here */
 #define BUF_FRAMES	512
 #define SAMP_RATE	48000
-//#define USE_PULSE
+/* #define USE_PULSE */
 
 /* device name */
 #ifdef USE_PULSE
@@ -30,7 +30,7 @@ unsigned int audio_period_size_frames = BUF_FRAMES / 2;
 
 snd_pcm_t *c_handle, *p_handle;
 
-#define CHECK_ERR(func) { if ((err = func) < 0) { printf("Initialization error: %s\n", snd_strerror(err)); return false; } }
+#define CHECK_ERR(func) { if ((err = func) < 0) { printf("Initialization error: %s\n", snd_strerror(err)); return (false); } }
 
 bool audio_init()
 {
@@ -91,7 +91,7 @@ bool audio_init()
 
     if (c_rate != p_rate) {
     	printf("Error: capture and playback sampling rate does not match\n");
-    	return false;
+    	return (false);
     }
 
     audio_samp_rate = c_rate;
@@ -111,7 +111,7 @@ bool audio_init()
 
     if (c_buf_size != p_buf_size) {
     	printf("Error: capture and playback buffer size does not match\n");
-    	return false;
+    	return (false);
     }
 
     audio_buf_size_frames = c_buf_size;
@@ -131,7 +131,7 @@ bool audio_init()
 
     if (c_period != p_period) {
     	printf("Error: capture and playback period does not match\n");
-    	return false;
+    	return (false);
     }
 
     audio_period_size_frames = c_period;
@@ -145,7 +145,7 @@ bool audio_init()
     CHECK_ERR( snd_pcm_link(c_handle, p_handle) )
 #endif
 
-    return true;
+    return (true);
 }
 
 void audio_reinit(char *buffer)
@@ -164,20 +164,20 @@ bool audio_read(char *buffer, snd_pcm_sframes_t *frames_num)
 {
     if ((*frames_num = snd_pcm_readi(c_handle, buffer, audio_period_size_frames)) < 0) {
         printf("Read error: %s\n", snd_strerror(*frames_num));
-        return false;
+        return (false);
     }
 
-    return true;
+    return (true);
 }
 
 bool audio_write(char *buffer, snd_pcm_sframes_t frames_num)
 {
     if ((frames_num = snd_pcm_writei(p_handle, buffer, frames_num)) < 0) {
         printf("Write error: %s\n", snd_strerror(frames_num));
-        return false;
+        return (false);
     }
 
-    return true;
+    return (true);
 }
 
 void audio_free()
